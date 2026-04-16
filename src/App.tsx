@@ -7,8 +7,6 @@ import { KpiCards } from './components/KpiCards'
 import { LoginForm } from './components/LoginForm'
 import { ModesTable } from './components/ModesTable'
 import { ObjectsChart } from './components/ObjectsChart'
-import { PaidCreatorsChart } from './components/PaidCreatorsChart'
-import { PaidObjectsChart } from './components/PaidObjectsChart'
 import { CREATOR_CARDS, IMPORT_CARDS, OBJECT_CARDS } from './constants/cards'
 import { consolidate, type AppData } from './utilities/consolidate'
 import { formatMonth } from './utilities/format'
@@ -123,11 +121,6 @@ const App = () => {
   const latestCreatorMonth = creatorConsolidated.at(-2) ?? null
   const latestImport = importChartData.at(-2) ?? null
 
-  const paidObjectsData = objectConsolidated.slice(-12).map(d => ({
-    ...d,
-    total_payant: Number(d.docs ?? 0) + Number(d.events ?? 0) + Number(d.jobs ?? 0),
-  }))
-
 
   // --- Render ---
 
@@ -178,9 +171,7 @@ const App = () => {
       />
 
       <ObjectsChart data={objectConsolidated.slice(-12)} />
-      <PaidObjectsChart data={paidObjectsData} />
       <CreatorsChart data={creatorConsolidated.slice(-12)} />
-      <PaidCreatorsChart data={creatorConsolidated.slice(-12)} />
       <ImportsChart data={importChartData.slice(-12)} />
       {latestMonth && latestCreatorMonth ? <DetailTable latestMonth={latestMonth} latestCreatorMonth={latestCreatorMonth} /> : null}
       <ModesTable />
